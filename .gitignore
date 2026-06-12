@@ -1,0 +1,22 @@
+# Глобальные игноры
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+dist/
+.next/
+out/
+build/
+
+# Переменные окружения
+.env
+.env.*
+!.env.example
+
+# Docker
+docker-compose.override.yml
+
+# IDE и прочее
+.vscode/
+.idea/

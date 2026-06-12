@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    # Берем переменные из env-файла бэкенда
+    env_file: ./backend/.env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile-backend
+    restart: unless-stopped
+    env_file: ./backend/.env
+    depends_on:
+      - postgres
+    networks:
+      - internal
+      - web
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile-frontend
+    restart: unless-stopped
+    env_file: ./frontend/.env
+    networks:
+      - web
+    ports:
+      - "3000:3000"
+
+networks:
+  internal:
+  web:
+
+volumes:
+  postgres_data:
+    external: true
+    name: app_postgres_data

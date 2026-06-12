@@ -1,0 +1,121 @@
+.report
+{
+	display: flex;
+	flex-direction: column;
+
+	&__card
+	{
+		overflow: hidden;
+		cursor: pointer;
+	}
+
+	&__header
+	{
+		display: flex;
+		gap: 5px;
+		align-items: center;
+		border-bottom: 1px solid $separator-color;
+	}
+
+	&__subject
+	{
+		background-color: $accent;
+		color: $text-white;
+		padding: 6px 16px;
+		border-radius: 12px;
+		font-size: 14px;
+	}
+
+	&__total
+	{
+		color: $text-white;
+		padding: 6px 16px;
+		border-radius: 12px;
+		font-size: 14px;
+		font-weight: 600;
+
+		&--good
+		{
+			background-color: $grade-good;
+		}
+
+		&--bad
+		{
+			background-color: $grade-bad;
+		}
+	}
+
+	&__content
+	{
+		display: flex;
+		flex-wrap: wrap;
+		gap: 15px;
+		font-size: 14px;
+		color: $text-dark;
+	}
+
+	&__month
+	{
+		display: flex;
+		gap: 5px;
+		align-items: center;
+	}
+
+	&__month-label
+	{
+		font-weight: 700;
+		color: $text-dark;
+	}
+
+	&__mark
+	{
+		color: $text-muted;
+
+		b
+		{
+			color: $text-dark;
+		}
+
+		&--bad
+		{
+			background: #f2894a;
+			padding: 1px 8px;
+			border-radius: 11px;
+			color: #fff;
+			font-weight: initial;
+		}
+	}
+
+	&__empty
+	{
+		color: $text-muted;
+	}
+}
+
+@media (max-width: 769px)
+{
+	.report
+	{
+		&__month
+		{
+			flex-wrap: wrap;
+		}
+
+		&__subject
+		{
+			width: 100%;
+		}
+
+		&__total
+		{
+			white-space: nowrap;
+			height: fit-content;
+			width: 100%;
+		}
+
+		&__header
+		{
+			flex-direction: column;
+		}
+	}
+}

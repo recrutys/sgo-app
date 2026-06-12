@@ -1,0 +1,28 @@
+.ui-input
+{
+	display: block;
+	margin-top: 20px;
+
+	&:first-child
+	{
+		margin-top: 0;
+	}
+
+	&__label
+	{
+		display: block;
+		font-size: 13px;
+		color: $text-muted;
+		font-weight: 400;
+		margin-bottom: 9px;
+	}
+
+	input
+	{
+		width: 100%;
+		padding: 14px 16px;
+		font-size: 14px;
+		border-radius: $corner-radius;
+		border: 1px solid $input-border;
+	}
+}

@@ -1,0 +1,88 @@
+.exams
+{
+	display: flex;
+	flex-direction: column;
+
+	&__header
+	{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 15px;
+		padding-bottom: 15px;
+		border-bottom: 1px solid $separator-color;
+	}
+
+	&__badge
+	{
+		background-color: $accent;
+		color: $text-white;
+		padding: 6px 20px;
+		border-radius: 100px;
+		font-size: 13px;
+		font-weight: 500;
+	}
+
+	&__items
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__row
+	{
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		font-size: 14px;
+		border-bottom: 1px solid rgba(227, 218, 218, 0.5);
+		padding-bottom: 5px;
+
+		&:last-child
+		{
+			border-bottom: none;
+		}
+	}
+
+	&__info
+	{
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+	}
+
+	&__name
+	{
+		font-weight: 600;
+		color: $text-dark;
+	}
+
+	&__teacher
+	{
+		color: $text-muted;
+		font-size: 13px;
+	}
+
+	&__grade
+	{
+		font-weight: 600;
+		color: $text-dark;
+		min-width: 60px;
+		text-align: center;
+	}
+}
+
+@media (max-width: 769px)
+{
+	.exams
+	{
+		&__badge
+		{
+			background-color: transparent;
+			color: $text-dark;
+			padding: 0;
+			font-weight: bold;
+		}
+	}
+}

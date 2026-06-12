@@ -1,0 +1,142 @@
+.grade-calculator
+{
+	&__header
+	{
+		margin-bottom: 20px;
+	}
+
+	&__title
+	{
+		margin: 0;
+		font-size: 18px;
+	}
+
+	&__avg
+	{
+		background: $accent;
+		color: $text-white;
+		padding: 4px 8px;
+		border-radius: 6px;
+		margin-left: 2px;
+	}
+
+	&__controls
+	{
+		margin-bottom: 20px;
+	}
+
+	&__controls-label
+	{
+		margin: 0 0 10px;
+		font-size: 14px;
+		color: #555555;
+	}
+
+	&__buttons
+	{
+		display: flex;
+		gap: 10px;
+	}
+
+	&__btn
+	{
+		border: none;
+		padding: 6px 10px;
+		border-radius: 6px;
+		font-weight: bold;
+		cursor: pointer;
+		transition: opacity 0.2s;
+		color: $text-white;
+		background: $accent;
+
+		&:hover
+		{
+			opacity: 0.8;
+		}
+	}
+
+	&__marks
+	{
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		overflow-y: auto;
+		max-height: 200px;
+	}
+
+	&__mark
+	{
+		display: inline-flex;
+		align-items: center;
+		padding: 6px 12px;
+		border-radius: 8px;
+		font-size: 14px;
+		background: #f0f0f0;
+		color: #333333;
+		transition: all 0.2s ease;
+		user-select: none;
+
+		b
+		{
+			margin-left: 4px;
+			font-size: 15px;
+		}
+
+		&--sim
+		{
+			background: #d4edda;
+			color: #155724;
+			cursor: pointer;
+			border: 1px dashed #28a745;
+
+			&:hover
+			{
+				background: #c3e6cb;
+			}
+		}
+
+		&--2
+		{
+			background: rgba(255, 94, 94, 0.65);
+			color: #cc0000;
+			cursor: pointer;
+		}
+
+		&--3
+		{
+			background: #ffe5e5;
+			color: #c85a00;
+			cursor: pointer;
+		}
+
+		&--4
+		{
+			background: rgba(255, 192, 3, 0.37);
+			color: #2e7d32;
+			cursor: pointer;
+		}
+
+		&--5
+		{
+			background: #d4edda;
+			color: #155724;
+			cursor: default;
+		}
+
+		// Игнорируемая оценка — зачёркнута и затемнена
+		&--ignored
+		{
+			opacity: 0.4;
+			text-decoration: line-through;
+			background: #f8f9fa;
+			color: #999999;
+		}
+	}
+
+	&__remove
+	{
+		margin-left: 8px;
+		font-size: 18px;
+		margin-top: -3px;
+	}
+}

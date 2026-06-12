@@ -1,0 +1,96 @@
+.tg
+{
+	&__status
+	{
+		display: inline-block;
+		padding: 6px 18px;
+		border-radius: 100px;
+		font-size: 14px;
+		font-weight: 500;
+		margin-bottom: 24px;
+
+		&--connected
+		{
+			background-color: rgba(52, 199, 89, 0.1);
+			color: #34c759;
+		}
+
+		&--disconnected
+		{
+			background-color: rgba(255, 59, 48, 0.1);
+			color: #ff3b30;
+		}
+	}
+
+	&__info
+	{
+		margin-bottom: 24px;
+
+		.tg-info-row
+		{
+			display: flex;
+			justify-content: space-between;
+			padding: 12px 0;
+			border-bottom: 1px solid $separator-color;
+
+			.tg-label
+			{
+				color: $text-muted;
+				font-size: 14px;
+			}
+
+			.tg-value
+			{
+				font-weight: 500;
+				font-size: 14px;
+			}
+		}
+	}
+
+	&__description
+	{
+		color: $text-muted;
+		font-size: 14px;
+		margin-bottom: 24px;
+		line-height: 1.5;
+	}
+
+	&__btn
+	{
+		display: inline-block;
+		padding: 12px 24px;
+		border-radius: 12px;
+		font-size: 15px;
+		font-weight: 500;
+		cursor: pointer;
+		border: none;
+		text-decoration: none;
+		transition: opacity 0.2s;
+
+		&:hover
+		{
+			opacity: 0.85;
+		}
+
+		&:disabled
+		{
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
+
+		&--connect
+		{
+			width: fit-content;
+			font-size: 13px;
+			padding: 10px 15px;
+			background: #2e63ca;
+			color: $text-white;
+		}
+
+		&--disconnect
+		{
+			background-color: rgba(255, 59, 48, 0.1);
+			color: #ff3b30;
+		}
+	}
+}

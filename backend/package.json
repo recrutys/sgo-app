@@ -1,0 +1,43 @@
+{
+    "name": "sgo-backend",
+    "version": "0.0.1",
+    "description": "",
+    "author": "",
+    "private": true,
+    "license": "UNLICENSED",
+    "scripts": {
+        "build": "nest build",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "start": "nest start",
+        "start:dev": "cross-env NODE_ENV=local nest start --watch",
+        "start:prod": "cross-env NODE_ENV=prod node dist/main"
+    },
+    "dependencies": {
+        "@nestjs/axios": "^4.0.1",
+        "@nestjs/common": "^11.0.1",
+        "@nestjs/config": "^4.0.0",
+        "@nestjs/core": "^11.0.1",
+        "@nestjs/mapped-types": "*",
+        "@nestjs/platform-express": "^11.0.1",
+        "@nestjs/typeorm": "^11.0.0",
+        "axios": "^1.17.0",
+        "pg": "^8.13.0",
+        "reflect-metadata": "^0.2.2",
+        "rxjs": "^7.8.1",
+        "socks-proxy-agent": "^10.0.0",
+        "typeorm": "^0.3.20"
+    },
+    "devDependencies": {
+        "@nestjs/cli": "^11.0.0",
+        "@nestjs/schematics": "^11.0.0",
+        "@types/express": "^5.0.0",
+        "@types/node": "^24.0.0",
+        "cross-env": "^7.0.3",
+        "prettier": "^3.4.2",
+        "source-map-support": "^0.5.21",
+        "ts-loader": "^9.5.2",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.7.3"
+    }
+}

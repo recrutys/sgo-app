@@ -1,0 +1,22 @@
+.offline-banner
+{
+	&__header
+	{
+		display: block;
+		font-size: 17px;
+		font-weight: bold;
+		border-bottom: 1px solid $separator-color;
+		padding: 15px 20px;
+	}
+
+	&__content
+	{
+		padding: 10px 20px;
+	}
+
+	&__logout
+	{
+		color: $text-muted;
+		cursor: pointer;
+	}
+}

@@ -1,0 +1,75 @@
+.widget-header
+{
+	margin-bottom: 12px;
+	color: $text-muted;
+	font-weight: 500;
+}
+
+.widget-badge
+{
+	background: $accent;
+	color: $text-white;
+	padding: 6px 10px;
+	border-radius: $corner-radius;
+	margin-bottom: 12px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.lesson-list
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.lesson-item
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+	font-size: 14px;
+
+	&:last-child
+	{
+		margin-bottom: 0;
+	}
+}
+
+.lesson-info
+{
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-right: 15px;
+	display: inline-block;
+}
+
+.lesson-number
+{
+	color: $text-muted;
+	margin-right: 6px;
+}
+
+.lesson-time
+{
+	color: $text-muted;
+	font-size: 13px;
+	text-align: right;
+	white-space: nowrap;
+}
+
+.current-badge
+{
+	display: block;
+	font-size: 10px;
+	color: #4caf50;
+	font-weight: bold;
+}
+
+.no-lessons
+{
+	color: #999999;
+	font-style: italic;
+}

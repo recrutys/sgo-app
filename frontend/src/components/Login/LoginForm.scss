@@ -1,0 +1,70 @@
+.login-card
+{
+	max-width: 522px;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.login-card__header
+{
+	padding: 20px 30px;
+	border-bottom: 1px solid $separator-color;
+}
+
+.login-card__main
+{
+	align-items: center;
+	gap: 17px;
+	display: flex;
+}
+
+.login-card__logo
+{
+	color: $text-white;
+	background: $accent;
+	border-radius: $corner-radius;
+	justify-content: center;
+	align-items: center;
+	width: 56px;
+	height: 56px;
+	font-size: 22px;
+	display: flex;
+	min-width: 56px;
+}
+
+.login-card__title
+{
+	font-size: 19px;
+	display: block;
+}
+
+.login-card__welcome-text
+{
+	margin-top: 17px;
+	font-size: 21px;
+	font-weight: 700;
+	display: block;
+}
+
+.login-card__content
+{
+	padding: 15px 30px;
+}
+
+.login-card__warningLabel
+{
+	color: $text-muted;
+	padding-top: 10px;
+	padding-bottom: 12px;
+	font-size: 14px;
+	font-weight: 200;
+	display: block;
+
+	a
+	{
+		color: $text-muted;
+		text-decoration: underline;
+	}
+}
