@@ -2,7 +2,6 @@ services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
-    # Берем переменные из env-файла бэкенда
     env_file: ./backend/.env
     environment:
       POSTGRES_USER: ${DB_USER}
@@ -19,6 +18,8 @@ services:
       dockerfile: Dockerfile-backend
     restart: unless-stopped
     env_file: ./backend/.env
+    environment:
+      - TZ=Europe/Moscow
     depends_on:
       - postgres
     networks:
