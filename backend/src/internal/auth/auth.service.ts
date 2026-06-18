@@ -21,34 +21,17 @@ export class AuthService
         secret_key: string
     }>
     {
-        // Хешируем пароль (требование СГО)
         const hashedPassword = crypto.createHash('sha256').update(data.password).digest('base64');
-
-        // Рассчитываем дату: действие ключа авторизации на сайте (не СГО) = +7 дней с момента авторизации
         const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-        // Ищем пользователя по логину
         let user = await this.userRepo.findOne({
             where: {
                 login: data.login
             }
         });
 
-        // Если пользователь существует и данные верны:
-        if (user && user.password_hash == hashedPassword)
-        {
-            // Продлеваем/устанавливаем срок жизни ключа
-            user.secret_key_expires_at = expiresAt;
+        const knownUser = user && user.password_hash == hashedPassword;
 
-            // Сохраняем в базу
-            await this.userRepo.save(user)
-
-            return {
-                secret_key: user.secret_key
-            }
-        }
-
-        // Если пользователь новый, либо ввёл новые данные
         let SGOResponse: any;
 
         try
@@ -56,13 +39,13 @@ export class AuthService
             SGOResponse = await firstValueFrom(
                 this.httpService.post(
                     'https://spo.rso23.ru/services/security/login',
-                    { // Параметры в body (JSON)
+                    {
                         login: data.login,
                         password: hashedPassword,
                         isRemember: true
                     },
-                    { // Дополнительные параметры
-                        timeout: 10000, // Если СГО не отвечает 10 секунд - отдаём ошибку,
+                    {
+                        timeout: 10000,
                         headers: {
                             'Content-Type': 'application/json',
                             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -73,18 +56,29 @@ export class AuthService
         }
         catch (error)
         {
+            // Если юзер уже известен локально (пароль совпал с хэшем в базе) -
+            // и СГО просто недоступен/упал/таймаут - работаем в офлайн-режиме по кэшу
+            if (user && knownUser && this.isSgoUnavailable(error))
+            {
+                user.secret_key_expires_at = expiresAt;
+                await this.userRepo.save(user);
+
+                return {
+                    secret_key: user.secret_key
+                }
+            }
+
+            // Иначе (юзер новый, либо СГО явно сказал "неверный пароль") - кидаем ошибку как обычно
             throw this.mapSgoError(error);
         }
 
-        // Авторизация успешна, устанавливаем данные студента
+        // СГО жив и ответил успехом - обновляем сессию по полной
         const SGOData = SGOResponse.data;
 
-        // Вытаскиваем ключ региона (тенанта)
         const tenantKey = SGOData.tenantName ?? Object.keys(SGOData.tenants ?? {})[0];
         const tenant = SGOData.tenants?.[tenantKey];
         if (!tenant) this.throwSgoParseError();
 
-        // Находим студента в структуре ответа СГО
         const student =
             tenant.studentRole?.students?.[0] ??
             tenant.parentRole?.students?.[0] ??
@@ -92,12 +86,10 @@ export class AuthService
 
         if (!student) this.throwSgoParseError();
 
-        // Собираем данные
         const groupName = student.groupName ?? tenant.studentRole?.groupName;
         const fullName = [student.lastName, student.firstName, student.middleName].filter(Boolean).join(' ');
         const sgoSession = this.extractSession(SGOResponse.headers['set-cookie']);
 
-        // Если пользователь не найден в базе - добавляем
         if (!user)
         {
             user = this.userRepo.create({
@@ -111,11 +103,12 @@ export class AuthService
                 sgo_student_id: String(student.id),
             });
         }
-        else // Если пользователь есть - обновляем (например, в сетевом сменили пароли)
+        else
         {
-            // Обновляем хэш пароля и сессию СГО в базе
             user.password_hash = hashedPassword;
             user.sgo_session = sgoSession;
+            user.sgo_full_name = fullName;
+            user.sgo_group_name = groupName;
             user.secret_key_expires_at = expiresAt;
         }
 
@@ -124,6 +117,17 @@ export class AuthService
         return {
             secret_key: user.secret_key
         }
+    }
+
+    private isSgoUnavailable(error: any): boolean
+    {
+        // Таймаут - СГО просто не ответил
+        if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) return true;
+
+        const status = error.response?.status;
+
+        // 5xx или отсутствие ответа вообще (сеть/прокси легла) - считаем СГО недоступным
+        return !status || status >= 500;
     }
 
     private extractSession(cookies: string[] | undefined): string
