@@ -8,6 +8,8 @@ export const metadata: Metadata = {
 export default function LoginPage()
 {
     return (
-        <LoginForm />
+		<Suspense fallback={<div>Загрузка...</div>}>
+			<LoginForm />
+	    </Suspense>
     );
 }
