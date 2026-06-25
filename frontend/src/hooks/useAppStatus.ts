@@ -25,7 +25,7 @@ export function useAppStatus(): AppStatus
 
                 if (!isCurrentRequest) return;
 
-                if (resData?.data?.available === false)
+                if (resData?.data === false)
                 {
                     setStatus("sgo_offline");
                 }

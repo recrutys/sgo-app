@@ -27,7 +27,6 @@ export default function MainLayout({children}: { children: React.ReactNode })
         {
             setIsAuthorized(true);
 
-            // Если авторизованный юзер забрел на корень группы, кидаем на дашборд
             if (pathname === "/")
             {
                 router.replace("/dashboard");

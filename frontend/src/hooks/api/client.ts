@@ -28,6 +28,22 @@ export async function apiClient(endpoint: string, method: string = "GET", body: 
                 // Если бэк упал совсем и выдал не JSON, а HTML-страницу ошибки
                 throw Object.assign(new Error(`Ошибка запроса: ${res.statusText}`), {code: "NETWORK_ERROR"});
             }
+
+            // Если сессия истекла или такого ключа нет - редирект на авторизацию
+            if (
+                res.status === 401
+                && (
+                    errorData?.message_code === "SECRET_KEY_EXPIRED"
+                    || errorData?.message_code === "INVALID_SECRET_KEY"
+                    || errorData?.message_code === "SGO_SESSION_EXPIRED"
+                )
+            )
+            {
+                localStorage.removeItem("secret_key");
+                window.location.replace("/login?reason=session_expired");
+                return;
+            }
+
             // Прокидываем данные ошибки от бэка дальше в catch компонента
             throw errorData;
         }

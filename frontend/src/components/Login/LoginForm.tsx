@@ -3,6 +3,9 @@
 import InputBox from "@/components/UI/InputBox/InputBox";
 import Button from "@/components/UI/Button/Button";
 import {useLoginForm} from "@/hooks/useLoginForm";
+import {useEffect} from "react";
+import {useSearchParams} from "next/navigation";
+import {toast} from "sonner";
 
 import './LoginForm.scss';
 import Link from "next/link";
@@ -10,6 +13,16 @@ import Link from "next/link";
 export default function LoginPage()
 {
     const {isLoading, isAlreadyAuth, executeLogin} = useLoginForm();
+    const searchParams = useSearchParams();
+
+    useEffect(() =>
+    {
+        if (searchParams.get("reason") === "session_expired")
+        {
+            const timer = setTimeout(() => toast.error("Срок сессии истёк. Войдите заново"), 0);
+            return () => clearTimeout(timer);
+        }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>
     {

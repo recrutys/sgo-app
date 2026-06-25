@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException, UnauthorizedException} from '@nestjs/common';
 import {HttpService} from "@nestjs/axios";
 import {getSGORequestParams} from "../../common/sgo.helper";
 import {firstValueFrom} from "rxjs";
@@ -70,6 +70,14 @@ export class DashboardService
         }
         catch (error)
         {
+            if (error?.response?.status === 401)
+            {
+                throw new UnauthorizedException({
+                    message: 'Сессия Сетевого Города истекла. Войдите заново',
+                    message_code: 'SGO_SESSION_EXPIRED',
+                });
+            }
+
             throw new InternalServerErrorException({
                 message: 'Ошибка при получении успеваемости',
                 message_code: 'DASHBOARD_FETCH_ERROR',

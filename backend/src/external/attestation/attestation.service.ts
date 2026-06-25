@@ -1,4 +1,4 @@
-import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {Injectable, InternalServerErrorException, UnauthorizedException} from '@nestjs/common';
 import {HttpService} from "@nestjs/axios";
 import {getSGORequestParams} from "../../common/sgo.helper";
 import {firstValueFrom} from "rxjs";
@@ -99,7 +99,5 @@ export class AttestationService
                 message_code: 'ATTESTATION_PARSE_ERROR',
             });
         }
-
-
     }
 }
